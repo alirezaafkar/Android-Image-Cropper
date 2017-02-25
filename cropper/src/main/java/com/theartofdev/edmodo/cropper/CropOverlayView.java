@@ -15,6 +15,7 @@ package com.theartofdev.edmodo.cropper;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -752,7 +753,12 @@ public class CropOverlayView extends View {
                 float left = rect.left;
                 for (int i = 0; i < mGuideLineHorizontalCount; i++) {
                     float x = left + oneThirdCropWidth;
-                    canvas.drawLine(x, rect.top, x, rect.bottom, mGuidelinePaint);
+                    Path path = new Path();
+                    path.moveTo(x, rect.top);
+                    path.lineTo(x, rect.bottom);
+                    mGuidelinePaint.setPathEffect(new DashPathEffect(new float[]{20, 10}, 0));
+                    canvas.drawPath(path, mGuidelinePaint);
+                    //canvas.drawLine(x, rect.top, x, rect.bottom, mGuidelinePaint);
                     left = x;
                 }
 
@@ -837,6 +843,24 @@ public class CropOverlayView extends View {
         Paint paint = new Paint();
         paint.setColor(color);
         return paint;
+    }
+
+    public void setGuideLineHorizontalCount(int count) {
+        if (mGuideLineHorizontalCount != count) {
+            mGuideLineHorizontalCount = count;
+            if (initializedCropWindow) {
+                invalidate();
+            }
+        }
+    }
+
+    public void setGuideLineVerticalCount(int count) {
+        if (mGuideLineVerticalCount != count) {
+            mGuideLineVerticalCount = count;
+            if (initializedCropWindow) {
+                invalidate();
+            }
+        }
     }
 
     /**

@@ -325,7 +325,7 @@ public class CropImageOptions implements Parcelable {
         rotationDegrees = 90;
 
         guideLineVerticalCount = 0;
-        guideLineHorizontalCount = 2;
+        guideLineHorizontalCount = 3;
     }
 
     /**
