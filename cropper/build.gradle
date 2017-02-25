@@ -3,6 +3,9 @@ apply plugin: 'com.android.library'
 // http://www.flexlabs.org/2013/06/using-local-aar-android-library-packages-in-gradle-builds
 apply plugin: 'maven-publish'
 
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.alirezaafkar'
+
 ext {
     PUBLISH_GROUP_ID = 'com.theartofdev.edmodo'
     PUBLISH_ARTIFACT_ID = 'android-image-cropper'
