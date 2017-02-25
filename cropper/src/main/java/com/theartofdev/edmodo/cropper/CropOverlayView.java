@@ -184,6 +184,10 @@ public class CropOverlayView extends View {
     private Integer mOriginalLayerType;
     //endregion
 
+    private int mGuideLineVerticalCount;
+
+    private int mGuideLineHorizontalCount;
+
     public CropOverlayView(Context context) {
         this(context, null);
     }
@@ -227,8 +231,8 @@ public class CropOverlayView extends View {
      * ImageView. This is necessary to call in order to draw the crop window.
      *
      * @param boundsPoints the image's bounding points
-     * @param viewWidth The bounding image view width.
-     * @param viewHeight The bounding image view height.
+     * @param viewWidth    The bounding image view width.
+     * @param viewHeight   The bounding image view height.
      */
     public void setBounds(float[] boundsPoints, int viewWidth, int viewHeight) {
         if (boundsPoints == null || !Arrays.equals(mBoundsPoints, boundsPoints)) {
@@ -363,7 +367,7 @@ public class CropOverlayView extends View {
      * Sets the Y value of the aspect ratio; is defaulted to 1.
      *
      * @param aspectRatioY int that specifies the new Y value of the aspect
-     * ratio
+     *                     ratio
      */
     public void setAspectRatioY(int aspectRatioY) {
         if (aspectRatioY <= 0) {
@@ -491,6 +495,9 @@ public class CropOverlayView extends View {
         mGuidelinePaint = getNewPaintOrNull(options.guidelinesThickness, options.guidelinesColor);
 
         mBackgroundPaint = getNewPaint(options.backgroundColor);
+
+        mGuideLineVerticalCount = options.guideLineVerticalCount;
+        mGuideLineHorizontalCount = options.guideLineHorizontalCount;
     }
 
     //region: Private methods
@@ -719,8 +726,8 @@ public class CropOverlayView extends View {
             RectF rect = mCropWindowHandler.getRect();
             rect.inset(sw, sw);
 
-            float oneThirdCropWidth = rect.width() / 3;
-            float oneThirdCropHeight = rect.height() / 3;
+            float oneThirdCropWidth = rect.width() / mGuideLineHorizontalCount;
+            float oneThirdCropHeight = rect.height() / mGuideLineVerticalCount;
 
             if (mCropShape == CropImageView.CropShape.OVAL) {
 
@@ -742,7 +749,21 @@ public class CropOverlayView extends View {
                 canvas.drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint);
             } else {
 
-                // Draw vertical guidelines.
+                float left = rect.left;
+                for (int i = 0; i < mGuideLineHorizontalCount; i++) {
+                    float x = left + oneThirdCropWidth;
+                    canvas.drawLine(x, rect.top, x, rect.bottom, mGuidelinePaint);
+                    left = x;
+                }
+
+                float top = rect.top;
+                for (int i = 0; i < mGuideLineVerticalCount; i++) {
+                    float y = top + oneThirdCropHeight;
+                    canvas.drawLine(rect.left, y, rect.right, y, mGuidelinePaint);
+                    top = y;
+                }
+
+                /*// Draw vertical guidelines.
                 float x1 = rect.left + oneThirdCropWidth;
                 float x2 = rect.right - oneThirdCropWidth;
                 canvas.drawLine(x1, rect.top, x1, rect.bottom, mGuidelinePaint);
@@ -752,7 +773,7 @@ public class CropOverlayView extends View {
                 float y1 = rect.top + oneThirdCropHeight;
                 float y2 = rect.bottom - oneThirdCropHeight;
                 canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
-                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);*/
             }
         }
     }

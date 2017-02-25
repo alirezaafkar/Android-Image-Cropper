@@ -87,10 +87,10 @@ public class CropImageOptions implements Parcelable {
      */
     public boolean autoZoomEnabled;
 
-  /**
-   * if multi-touch should be enabled on the crop box
-   * default: false
-   */
+    /**
+     * if multi-touch should be enabled on the crop box
+     * default: false
+     */
     public boolean multiTouchEnabled;
 
     /**
@@ -263,6 +263,9 @@ public class CropImageOptions implements Parcelable {
      */
     public int rotationDegrees;
 
+    public int guideLineVerticalCount;
+    public int guideLineHorizontalCount;
+
     /**
      * Init options with defaults.
      */
@@ -320,6 +323,9 @@ public class CropImageOptions implements Parcelable {
         allowRotation = true;
         allowCounterRotation = false;
         rotationDegrees = 90;
+
+        guideLineVerticalCount = 0;
+        guideLineHorizontalCount = 2;
     }
 
     /**
@@ -369,6 +375,8 @@ public class CropImageOptions implements Parcelable {
         allowRotation = in.readByte() != 0;
         allowCounterRotation = in.readByte() != 0;
         rotationDegrees = in.readInt();
+        guideLineVerticalCount = in.readInt();
+        guideLineHorizontalCount = in.readInt();
     }
 
     @Override
@@ -416,6 +424,8 @@ public class CropImageOptions implements Parcelable {
         dest.writeByte((byte) (allowRotation ? 1 : 0));
         dest.writeByte((byte) (allowCounterRotation ? 1 : 0));
         dest.writeInt(rotationDegrees);
+        dest.writeInt(guideLineVerticalCount);
+        dest.writeInt(guideLineHorizontalCount);
     }
 
     @Override

@@ -237,6 +237,8 @@ public class CropImageView extends FrameLayout {
                     options.minCropResultHeight = (int) ta.getFloat(R.styleable.CropImageView_cropMinCropResultHeightPX, options.minCropResultHeight);
                     options.maxCropResultWidth = (int) ta.getFloat(R.styleable.CropImageView_cropMaxCropResultWidthPX, options.maxCropResultWidth);
                     options.maxCropResultHeight = (int) ta.getFloat(R.styleable.CropImageView_cropMaxCropResultHeightPX, options.maxCropResultHeight);
+                    options.guideLineVerticalCount = ta.getInt(R.styleable.CropImageView_guideLineVerticalCount, options.guideLineVerticalCount);
+                    options.guideLineHorizontalCount = ta.getInt(R.styleable.CropImageView_guideLineHorizontalCount, options.guideLineHorizontalCount);
 
                     // if aspect ratio is set then set fixed to true
                     if (ta.hasValue(R.styleable.CropImageView_cropAspectRatioX) &&
